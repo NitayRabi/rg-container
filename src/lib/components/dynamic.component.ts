@@ -1,6 +1,6 @@
-import { Component, ComponentFactoryResolver, Input, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { HostDirective } from '../directives/host.directive';
-
+import { IWidget, IWidgetComponent, IRgWidgetParams } from '../interfaces';
 
 @Component({
   selector: 'rg-dynamic',
@@ -9,18 +9,41 @@ import { HostDirective } from '../directives/host.directive';
 })
 export class DynamicComponent {
 
-  @Input() set component(component: any) {
-    this.initComponent(component);
+  private _widget: IWidget;
+  @Input() set widget(widget: IWidget) {
+    this.viewContainerRef.clear();
+    this._widget = widget;
+    if (widget) {
+      this.initComponent();
+    }
+  }
+
+  @Input() params: IRgWidgetParams;
+
+  get widget(): IWidget {
+    return this._widget;
   }
 
   @ViewChild(HostDirective) host: HostDirective;
 
+  get viewContainerRef(): ViewContainerRef {
+    return this.host.viewContainerRef;
+  }
+
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
-  initComponent(component: any) {
-    const factory = this.componentFactoryResolver.resolveComponentFactory(component);
-    const viewContainerRef = this.host.viewContainerRef;
-    viewContainerRef.clear();
-    const componentRef = viewContainerRef.createComponent(factory);
+  private initComponent() {
+    const factory = this.componentFactoryResolver.resolveComponentFactory(this.widget.component);
+    const componentRef = this.viewContainerRef.createComponent(factory);
+    // Merge all inputs
+    if (this.widget.inputs) {
+      Object.keys(this.widget.inputs).forEach(key => {
+        componentRef.instance[key] = this.widget.component[key];
+      });
+    }
+    if ((<IWidgetComponent>componentRef.instance).rgInit && this.params) {
+      (<IWidgetComponent>componentRef.instance).rgInit(this.params);
+    }
   }
+
 }

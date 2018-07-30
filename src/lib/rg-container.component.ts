@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IRgContainerOptions } from './interfaces';
+import { IRgContainerOptions, IRgWidgetParams } from './interfaces';
 
 @Component({
   selector: 'rg-container',
@@ -8,7 +8,19 @@ import { IRgContainerOptions } from './interfaces';
 })
 export class RgContainerComponent {
 
+  private _options: IRgContainerOptions;
+  params: IRgWidgetParams;
+
   @Input()
-  options: IRgContainerOptions;
+  set options(options: IRgContainerOptions) {
+    this._options = options;
+    this.params = {
+      context: options.context
+    }
+  }
+
+  get options(): IRgContainerOptions {
+    return this._options;
+  }
 
 }

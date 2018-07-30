@@ -1,6 +1,7 @@
-<div class="main-container">
+<div class="rg-main-container" [ngStyle]="options.style || {}">
   <ng-container *ngFor="let widget of options.widgets">
-    <rg-dynamic [component]="widget.component"></rg-dynamic>
-    {{ widget | json }}
+    <div class="rg-component-container" [ngStyle]="widget.style || {}">
+      <rg-dynamic [params]="params" [widget]="widget"></rg-dynamic>
+    </div>
   </ng-container>
 </div>
