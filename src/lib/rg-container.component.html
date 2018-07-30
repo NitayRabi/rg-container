@@ -1,5 +1,6 @@
 <div class="main-container">
-  <ng-container *ngFor="let widget of _options.widgets">
-    <ng-template rgHost></ng-template>
+  <ng-container *ngFor="let widget of options.widgets">
+    <rg-dynamic [component]="widget.component"></rg-dynamic>
+    {{ widget | json }}
   </ng-container>
 </div>
