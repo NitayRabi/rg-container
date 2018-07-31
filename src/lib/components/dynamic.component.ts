@@ -48,7 +48,7 @@ export class DynamicComponent {
     // Merge all inputs
     if (this.widget.inputs) {
       Object.keys(this.widget.inputs).forEach(key => {
-        componentRef.instance[key] = this.widget.component[key];
+        componentRef.instance[key] = this.widget.inputs[key];
       });
     }
     if ((<IWidgetComponent>componentRef.instance).rgInit && this.params) {
