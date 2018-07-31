@@ -1,5 +1,5 @@
 export interface IComponentBaseOptions {
-  style?: any;
+  style?: { [key: string]: string };
 }
 
 export interface IWidget extends IComponentBaseOptions {
