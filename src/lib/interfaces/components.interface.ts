@@ -1,7 +1,7 @@
-export interface IRgWidgetParams {
-  context: any;
+export interface IRgWidgetParams<T> {
+  context: T;
 }
 
-export interface IWidgetComponent {
-  rgInit: (param: IRgWidgetParams) => void;
+export interface IRgWidgetComponent {
+  rgInit: <T>(param: IRgWidgetParams<T>) => void;
 }

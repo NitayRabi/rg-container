@@ -1,4 +1,4 @@
-#Rg-Container
+# Rg-Container
 Dynamic component rendering container - 
 - Widget styling
 - Data sharing using inputs/context
@@ -100,4 +100,36 @@ export class AppComponent {
 
 ```
 
-## 
+## Component Data Sharing
+
+You can share data with the rendered component using two methods - 
+- passing inputs through `IRgContainerOptions`'s `inputs` dictionary.
+- using `rgInit` method which passes `context` of type `T` (passed through `IRgContainerOptions`'s context field)
+
+```typescript
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { IRgWidgetParams, IRgWidgetComponent } from 'rg-container';
+
+@Component({
+  selector: 'app-sample',
+  templateUrl: './sample.component.html',
+  styleUrls: ['./sample.component.css']
+})
+export class SampleComponent implements OnInit, IRgWidgetComponent, OnDestroy {
+
+  context: any;
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+  @Input()
+  data: string[];
+
+  rgInit(params: IRgWidgetParams<any>) {
+    this.context = params.context;
+  }
+
+}
+
+```

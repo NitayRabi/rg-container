@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { HostDirective } from '../directives/host.directive';
-import { IWidget, IWidgetComponent, IRgWidgetParams } from '../interfaces';
+import { IWidget, IRgWidgetComponent, IRgWidgetParams } from '../interfaces';
 
 @Component({
   selector: 'rg-dynamic',
@@ -21,15 +21,15 @@ export class DynamicComponent {
     return this._widget;
   }
 
-  private _params: IRgWidgetParams;
-  @Input() set params (params: IRgWidgetParams) {
+  private _params: IRgWidgetParams<any>;
+  @Input() set params (params: IRgWidgetParams<any>) {
     this._params = params;
     if (params) {
       this.initComponent();
     }
   };
 
-  get params(): IRgWidgetParams {
+  get params(): IRgWidgetParams<any> {
     return this._params;
   }
 
@@ -51,8 +51,8 @@ export class DynamicComponent {
         componentRef.instance[key] = this.widget.inputs[key];
       });
     }
-    if ((<IWidgetComponent>componentRef.instance).rgInit && this.params) {
-      (<IWidgetComponent>componentRef.instance).rgInit(this.params);
+    if ((<IRgWidgetComponent>componentRef.instance).rgInit && this.params) {
+      (<IRgWidgetComponent>componentRef.instance).rgInit(this.params);
     }
   }
 

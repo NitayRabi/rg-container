@@ -9,7 +9,7 @@ import { IRgContainerOptions, IRgWidgetParams } from './interfaces';
 export class RgContainerComponent {
 
   private _options: IRgContainerOptions;
-  params: IRgWidgetParams;
+  params: IRgWidgetParams<any>;
 
   @Input()
   set options(options: IRgContainerOptions) {
