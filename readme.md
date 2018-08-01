@@ -76,7 +76,7 @@ export class AppComponent {
     // Array of Widgets.
     widgets: [
       {
-        // Styling the widget (passes to containing div for the component)
+        // Styling the widget (passes component's containing div)
         style: {
           padding: '15px',
           margin: '15px',
